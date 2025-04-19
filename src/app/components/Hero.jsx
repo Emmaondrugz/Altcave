@@ -1,17 +1,32 @@
+"use client";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import Header from "./Header";
 
 export default function Hero({ sideNav, setSideNav }) {
+
+    // motion varaibles
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+
     return (
         <div className="min-h-screen bg-[#f7f7f7] w-full pb-32 sm:pb-20">
             <Header sideNav={sideNav} setSideNav={setSideNav} />
 
             <div className="flex flex-col gap-x-20 gap-y-14 lg:flex-row items-center lg:pt-10 pt-10 px-6 lg:px-20">
                 <div className="flex flex-col w-full lg:w-1/2">
-                    <h1 className="sm:text-5xl text-3xl w-full lg:text-left text-center md:leading-tight lg:w-full poppins">
+                    <motion.div
+                        ref={ref}
+                        initial={{ opacity: 0, y: 100 }}
+                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="sm:text-5xl text-3xl w-full lg:text-left text-center md:leading-tight lg:w-full poppins">
+
                         The best platform<br />
                         for Crypto Trading &
                         investments
-                    </h1>
+                    </motion.div>
+
                     <p className="mt-4 text-xs text-gray-500 md:text-sm lg:text-left md:text-center text-center w-[80%] sm:w-[60%] lg:mx-0 mx-auto lg:w-[70%] comfortaa">
                         Discover the best investment opportunities in the cryptocurrency market.
                     </p>
